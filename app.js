@@ -16,12 +16,16 @@ const express    = require("express"),
       //Schema setup
       const campgroundSchema = new mongoose.Schema({
           name: String,
-          image: String
+          image: String,
+          description: String,
       })
 
       const Campground = mongoose.model("Campground", campgroundSchema);
 
-    //   Campground.create({name: "Blooper Mountain", image: "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"}, (err, campground) => {
+    //   Campground.create({
+    //       name: "Blooper Mountain", 
+    //       image: "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60", 
+    //       description: "This is a peaceful mountain where all curse words have been filtered"}, (err, campground) => {
     //       if(err) console.log(err);
     //       else console.log('successfully created new campground: ', campground);
     //   })
@@ -37,7 +41,7 @@ app.get("/", (req, res, next) => {
 app.get("/campgrounds", (req, res, next) => {
     Campground.find({}, (err, allCampgrounds) => {
         if(err) console.log(err);
-        else res.render("campgrounds", {campgrounds: allCampgrounds});
+        else res.render("index", {campgrounds: allCampgrounds});
     })
 })
 
@@ -57,6 +61,13 @@ app.post("/campgrounds", (req, res, next) => {
 
 app.get("/campgrounds/new/", (req, res, next) => {
     res.render("new");
+})
+
+app.get("/campgrounds/:id", (req, res, next) => {
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        if(err) console.log(err);
+        else res.render("show", {campground: foundCampground});
+    })
 })
 
 app.listen(port, ()=> {

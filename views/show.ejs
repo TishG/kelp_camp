@@ -1,0 +1,14 @@
+<% include partials/header %>
+
+<% include partials/navbar %>
+
+<main class="container text-center">
+
+    <h1><%= campground.name %></h1>
+
+    <img src="<%= campground.image %>" alt="<%= campground.name %>" class="img-fluid">
+    <p><%= campground.description %></p>
+
+</main>
+
+<% include partials/footer %>
