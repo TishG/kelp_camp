@@ -1,13 +1,27 @@
 <% include partials/header %>
-<a href="/campgrounds/new/">Add a new campground</a>
 
-<h1>Campgrounds page goes here</h1>
+<% include partials/navbar %>
 
-<% campgrounds.map(campground => { %>
-    <div>
-        <h3><%= campground.name %></h3>
-        <img src="<%= campground.image %>" alt="Campground Image">
-    </div>
-<% }) %>
+<main class="container p-3">
+    <header class="jumbotron">
+        <section class="text-center">
+            <h1>Welcome to KelpCamp</h1>
+            <p>The #1 site for campgrounds</p>
+            <p>
+                <a class="btn btn-primary btn-md" href="/campgrounds/new/">Add a new campground</a>
+            </p>
+        </section>
+    </header>
+    <section class="row">
+            <% campgrounds.map(campground => { %>
+                <section class="col-md-6 col-lg-4 mt-3">
+                    <section class="card p-1 text-center">
+                        <img src="<%= campground.image %>" alt="Campground Image" class="img-fluid">
+                        <h3 class="card-title pt-1"><%= campground.name %></h3>
+                    </section>
+                </section>
+            <% }) %>
+    </section>
+</main>
 
 <% include partials/footer %>
