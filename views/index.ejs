@@ -16,8 +16,11 @@
             <% campgrounds.map(campground => { %>
                 <section class="col-md-6 col-lg-4 mt-3">
                     <section class="card p-1 text-center">
-                        <img src="<%= campground.image %>" alt="Campground Image" class="img-fluid">
-                        <h3 class="card-title pt-1"><%= campground.name %></h3>
+                        <img src="<%= campground.image %>" alt="Campground Image" class="card-img-top img-fluid">
+                        <section class="card-body">
+                            <h3 class="card-title"><%= campground.name %></h3>
+                            <a href="/campgrounds/<%= campground._id %>" class="btn btn-info">More Info</a>
+                        </section>
                     </section>
                 </section>
             <% }) %>
