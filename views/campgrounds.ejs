@@ -1,3 +1,5 @@
+<% include partials/header %>
+
 <h1>Campgrounds page goes here</h1>
 
 <% campgrounds.map(campground => { %>
@@ -6,3 +8,5 @@
         <img src="<%= campground.image %>" alt="Campground Image">
     </div>
 <% }) %>
+
+<% include partials/footer %>
