@@ -49,7 +49,8 @@ app.post("/campgrounds", (req, res, next) => {
     //get data from forms and add to campgrounds array
     let name = req.body.name;
     let image = req.body.image;
-    let newCampground = {name, image};
+    let description = req.body.description;
+    let newCampground = {name, image, description};
     //create a newCampground and save to db
     Campground.create(newCampground, (err, newCampgroundCreated) => {
         if(err) console.log(err);
