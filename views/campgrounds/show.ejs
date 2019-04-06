@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<% include ../partials/navbar %>
+
+<main class="container text-center p-3">
+
+    <h1><%= campground.name %></h1>
+
+    <img src="<%= campground.image %>" alt="<%= campground.name %>" class="img-fluid">
+    <section class="description-container d-flex justify-content-center">
+        <p class="my-4 col-lg-8"><%= campground.description %></p>
+    </section>
+    <h3>Comments</h3>
+    <section id="comments-container">
+    <% campground.comments.map(comment => { %>
+        <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+    <% }) %>
+    </section>
+<section id="new-comment-form-container" class="d-flex justify-content-center">
+    <form class="form-inline" action="" method="POST">
+        <div class="form-group mb-2 mx-1">
+          <label for="newComment" class="sr-only" class="col-form-label-sm">Comment</label>
+          <input type="text" class="form-control-sm" id="newComment" placeholder="Enter comment">
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary mb-2">Add Comment</button>
+    </form>
+</section>
+
+</main>
+
+<% include ../partials/footer %>

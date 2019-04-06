@@ -6,6 +6,11 @@ const express    = require("express"),
       dotenv     = require('dotenv').config(),
       URI        = `mongodb+srv://kelpCampCreator:${process.env.kelpCampCreatorPassword}@kelpcampapp-rwgto.mongodb.net/test?retryWrites=true`,
       mongoose   = require("mongoose");
+      Campground = require("./models/campground");
+      Comment = require("./models/comment");
+    //   User = require("./models/user");
+      seedDB     = require("./seeds");
+      seedDB();
       mongoose.connect(URI, { useNewUrlParser: true }, (err) => {
           if(err) {
               console.log(err.errors);
@@ -13,14 +18,6 @@ const express    = require("express"),
               console.log("successully connected to database!")
           }
       })
-      //Schema setup
-      const campgroundSchema = new mongoose.Schema({
-          name: String,
-          image: String,
-          description: String,
-      })
-
-      const Campground = mongoose.model("Campground", campgroundSchema);
 
     //   Campground.create({
     //       name: "Blooper Mountain", 
@@ -41,7 +38,7 @@ app.get("/", (req, res, next) => {
 app.get("/campgrounds", (req, res, next) => {
     Campground.find({}, (err, allCampgrounds) => {
         if(err) console.log(err);
-        else res.render("index", {campgrounds: allCampgrounds});
+        else res.render("campgrounds/index", {campgrounds: allCampgrounds});
     })
 })
 
@@ -61,13 +58,14 @@ app.post("/campgrounds", (req, res, next) => {
 })
 
 app.get("/campgrounds/new/", (req, res, next) => {
-    res.render("new");
+    res.render("campgrounds/new");
 })
 
 app.get("/campgrounds/:id", (req, res, next) => {
-    Campground.findById(req.params.id, (err, foundCampground) => {
+    Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
         if(err) console.log(err);
-        else res.render("show", {campground: foundCampground});
+        else res.render("campgrounds/show", {campground: foundCampground});
+        console.log(foundCampground);
     })
 })
 

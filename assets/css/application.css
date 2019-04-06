@@ -1,4 +1,8 @@
 nav .navbar-toggler {
   border: none;
 }
+
+.form-control-sm {
+  width: 300px;
+}
 /*# sourceMappingURL=application.css.map */
