@@ -2,29 +2,76 @@
 
 <% include ../partials/navbar %>
 
-<main class="container text-center p-3">
+<main id="show-page" class="container text-center p-3">
+    <section class="row">
+        <!-- sidebar -->
+        <section class="col-lg-3">
+            <h4>KelpCamp</h4>
+            <section  class="d-flex justify-content-center">
+            <section class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Info-1</li>
+                    <li class="list-group-item">Info-2</li>
+                    <li class="list-group-item">Info-3</li>
+                </ul>
+            </section>
+        </section>
+        </section>
+        <!-- maincampground info and comments -->
+        <section class="col-lg-8 offset-lg-1 mt-3 mt-lg-0">
 
-    <h1><%= campground.name %></h1>
+        <section class="card ">
+            <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="<%= campground.name %>">
+            <section class="card-body text-left">
+                <section class="d-flex justify-content-between">
+                    <h4 class="card-title"><a href=""><%= campground.name %></a></h4>
+                    <h4>$9.00/night</h4>
+                </section>
+                <p class="card-text"><%= campground.description %></p>
+            </section>
+        </section>
 
-    <img src="<%= campground.image %>" alt="<%= campground.name %>" class="img-fluid">
-    <section class="description-container d-flex justify-content-center">
-        <p class="my-4 col-lg-8"><%= campground.description %></p>
+          <!-- new comment form section -->
+    <section class="dropdown-divider my-4"></section>
+
+    <form id="new-comment-form" class="card p-3" action="/campgrounds/<%= campground._id %>/comments" method="POST">
+        <p><strong>Add a comment to "<%= campground.name %>"</strong></p>
+    <div class="form-group">
+        <section class="text-left">
+            <label for="text">Text:</label> 
+        </section>
+        <input id="text" type="text" aria-placeholder="Enter text" placeholder="Enter text" name="comment[text]" class="form-control">
+    </div>
+    <div class="form-group">
+        <section class="text-left">
+            <label for="author">Author:</label>
+        </section>
+        <input id="author" type="text" aria-placeholder="Enter name" placeholder="Enter name" name="comment[author]" class="form-control">
+    </div>
+    <section class="d-flex justify-content-end">
+        <button class="btn btn-primary">Post</button>
     </section>
-    <h3>Comments</h3>
-    <section id="comments-container">
-    <% campground.comments.map(comment => { %>
-        <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
-    <% }) %>
-    </section>
-<section id="new-comment-form-container" class="d-flex justify-content-center">
-    <form class="form-inline" action="" method="POST">
-        <div class="form-group mb-2 mx-1">
-          <label for="newComment" class="sr-only" class="col-form-label-sm">Comment</label>
-          <input type="text" class="form-control-sm" id="newComment" placeholder="Enter comment">
-        </div>
-        <button type="submit" class="btn btn-sm btn-primary mb-2">Add Comment</button>
     </form>
-</section>
+ 
+    <section class="dropdown-divider"></section>
+
+    <!-- comments -->
+    <h5>Comments</h5>
+    <ul class="list-group">
+    <% campground.comments.map(comment => { %>
+        <li id="comments"class="list-group-item">
+            <p class="text-left col-8"><strong><%= comment.author %> said:</strong></p>
+            <section class="d-flex justify-content-between">
+                <p class="text-left col-8"><%= comment.text %></p>
+                <p class="col-4"><em>Posted 10 days ago</em></p>
+            </section>
+        </li>
+    <% }) %>
+    </ul>
+
+    </section>
+
+    </section>
 
 </main>
 

@@ -2,7 +2,11 @@ nav .navbar-toggler {
   border: none;
 }
 
-.form-control-sm {
-  width: 300px;
+#show-page li#comments {
+  background-color: #f7f7f9;
+}
+
+#new-comment-form {
+  background-color: #f7f7f9;
 }
 /*# sourceMappingURL=application.css.map */

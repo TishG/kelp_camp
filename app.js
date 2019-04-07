@@ -7,7 +7,7 @@ const express    = require("express"),
       URI        = `mongodb+srv://kelpCampCreator:${process.env.kelpCampCreatorPassword}@kelpcampapp-rwgto.mongodb.net/test?retryWrites=true`,
       mongoose   = require("mongoose");
       Campground = require("./models/campground");
-      Comment = require("./models/comment");
+      Comment    = require("./models/comment");
     //   User = require("./models/user");
       seedDB     = require("./seeds");
       seedDB();
@@ -66,6 +66,28 @@ app.get("/campgrounds/:id", (req, res, next) => {
         if(err) console.log(err);
         else res.render("campgrounds/show", {campground: foundCampground});
         console.log(foundCampground);
+    })
+});
+
+app.post("/campgrounds/:id/comments", (req, res, next) => {
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        if(err) {
+            console.log(err);
+            res.redirect(`/campgrounds`);
+        } else {
+            Comment.create(req.body.comment, (err, newComment) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect(`/campgrounds/${req.params.id}`);
+                } else {
+                    foundCampground.comments.push(newComment);
+                    foundCampground.save((err) => {
+                        if(err) console.log(err);
+                        else res.redirect(`/campgrounds/${req.params.id}`);
+                    })
+                }
+            })
+        }
     })
 })
 
