@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     
     <section class="container">
-        <a class="navbar-brand" href="/home">KelpCamp</a>
+        <a class="navbar-brand" href="/">KelpCamp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="fas fa-angle-down"></span>
         </button>
@@ -10,9 +10,13 @@
             <section class="navbar-nav">
                 <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/campgrounds">Campgrounds</a>
-                <a class="nav-item nav-link" href="#">Login</a>
-                <a class="nav-item nav-link btn btn-primary text-white" href="#">Sign Up</a>
-                <a class="nav-item nav-link" href="#">Logout</a>
+                <% if(!currentUser) { %>
+                <a class="nav-item nav-link" href="/login">Login</a>
+                <a class="nav-item nav-link btn btn-primary text-white" href="/register">Sign Up</a>
+                <% } else { %>
+                    <a class="nav-item nav-link" href="#">( Signed in as <strong><%= currentUser.username %></strong> )</a>
+                <a class="nav-item nav-link" href="/logout">Logout</a>
+                <% } %>
             </section>
         </section>
         </section>
