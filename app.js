@@ -1,95 +1,57 @@
-const express    = require("express"),
-      app        = express(),
-      port       = process.env.PORT || 3000,
-      bodyParser = require("body-parser"),
-      path       = require("path"),
+const express    = require("express");
+      app        = express();
+      port       = process.env.PORT || 3000;
+      bodyParser = require("body-parser");
+      path       = require("path");
+      commentRoutes = require("./routes/comments");
+      campgroundRoutes = require("./routes/campgrounds");
+      authRoutes = require("./routes/auth");
+      landingRoute = require("./routes/landing");
       dotenv     = require('dotenv').config(),
       URI        = `mongodb+srv://kelpCampCreator:${process.env.kelpCampCreatorPassword}@kelpcampapp-rwgto.mongodb.net/test?retryWrites=true`,
       mongoose   = require("mongoose");
       Campground = require("./models/campground");
       Comment    = require("./models/comment");
+      User       = require("./models/user")
+      passport   = require("passport");
+      LocalStrategy = require("passport-local");
     //   User = require("./models/user");
       seedDB     = require("./seeds");
-      seedDB();
+    //   seedDB(); //seed the database
       mongoose.connect(URI, { useNewUrlParser: true }, (err) => {
           if(err) {
               console.log(err.errors);
           } else {
               console.log("successully connected to database!")
           }
-      })
-
-    //   Campground.create({
-    //       name: "Blooper Mountain", 
-    //       image: "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60", 
-    //       description: "This is a peaceful mountain where all curse words have been filtered"}, (err, campground) => {
-    //       if(err) console.log(err);
-    //       else console.log('successfully created new campground: ', campground);
-    //   })
+      });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname + "/assets")));
+app.use(require("express-session")({
+    secret: process.env.cookieSecret,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-app.get("/", (req, res, next) => {
-    res.render("landing");
+//make currentUser available to all ejs templastes
+//calls function on all routes
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
 });
+app.use("/campgrounds/:id", commentRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use(authRoutes);
+app.use("/", landingRoute);
 
-app.get("/campgrounds", (req, res, next) => {
-    Campground.find({}, (err, allCampgrounds) => {
-        if(err) console.log(err);
-        else res.render("campgrounds/index", {campgrounds: allCampgrounds});
-    })
-})
-
-app.post("/campgrounds", (req, res, next) => {
-    //get data from forms and add to campgrounds array
-    let name = req.body.name;
-    let image = req.body.image;
-    let description = req.body.description;
-    let newCampground = {name, image, description};
-    //create a newCampground and save to db
-    Campground.create(newCampground, (err, newCampgroundCreated) => {
-        if(err) console.log(err);
-        else res.redirect("/campgrounds");
-        console.log('Successfully created a new campground... ', newCampgroundCreated);
-    })
-    //redirect back to campgrounds page
-})
-
-app.get("/campgrounds/new/", (req, res, next) => {
-    res.render("campgrounds/new");
-})
-
-app.get("/campgrounds/:id", (req, res, next) => {
-    Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
-        if(err) console.log(err);
-        else res.render("campgrounds/show", {campground: foundCampground});
-        console.log(foundCampground);
-    })
-});
-
-app.post("/campgrounds/:id/comments", (req, res, next) => {
-    Campground.findById(req.params.id, (err, foundCampground) => {
-        if(err) {
-            console.log(err);
-            res.redirect(`/campgrounds`);
-        } else {
-            Comment.create(req.body.comment, (err, newComment) => {
-                if(err) {
-                    console.log(err);
-                    res.redirect(`/campgrounds/${req.params.id}`);
-                } else {
-                    foundCampground.comments.push(newComment);
-                    foundCampground.save((err) => {
-                        if(err) console.log(err);
-                        else res.redirect(`/campgrounds/${req.params.id}`);
-                    })
-                }
-            })
-        }
-    })
-})
+//Auth Routes
 
 app.listen(port, ()=> {
     console.log(`listening on port ${port}`);
