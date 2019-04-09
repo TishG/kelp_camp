@@ -27,8 +27,11 @@
                     <h4 class="card-title"><a href=""><%= campground.name %></a></h4>
                     <h4>$9.00/night</h4>
                 </section>
-                <p class="card-text"><%= campground.description %></p>
-            </section>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p>
+                        <em class="small">Submitted by <%= campground.author.username %></em>
+                    </p>
+                </section>
         </section>
 
           <!-- new comment form section -->
