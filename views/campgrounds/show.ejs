@@ -31,10 +31,12 @@
                     <p>
                         <em class="small">Submitted by <%= campground.author.username %></em>
                     </p>
+                  <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
                     <section class="d-flex">
                         <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning mr-1">Edit</a>
                         <a href="/campgrounds/<%= campground._id %>/delete" class="btn btn-danger">Delete</a>
                     </section>
+                   <% } %>
                 </section>
         </section>
 
