@@ -9,4 +9,14 @@ nav .navbar-toggler {
 #new-comment-form {
   background-color: #f7f7f9;
 }
+
+#edit-comment-form {
+  -webkit-box-shadow: 1px 1px 17px 1px rgba(0, 0, 0, 0.75);
+          box-shadow: 1px 1px 17px 1px rgba(0, 0, 0, 0.75);
+}
+
+#user-question {
+  -webkit-box-shadow: 6px 6px 5px -8px #343a40;
+          box-shadow: 6px 6px 5px -8px #343a40;
+}
 /*# sourceMappingURL=application.css.map */

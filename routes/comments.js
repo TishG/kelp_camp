@@ -2,7 +2,7 @@ const express = require("express");
       router  = express.Router({mergeParams: true});
 
 //new comment post
-router.post("/comments", isLoggedIn, (req, res, next) => {
+router.post("/comments", isLoggedIn, isEmpty, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundCampground) => {
         if(err) {
             console.log(err);
@@ -36,6 +36,13 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect("/login");
+}
+
+function isEmpty(req, res, next) {
+    if(req.body.comment.text != "") {
+        return next();
+    }
+    res.redirect(`/campgrounds/${req.params.id}`);
 }
 
 module.exports = router;
