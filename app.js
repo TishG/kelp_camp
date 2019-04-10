@@ -3,6 +3,7 @@ const express    = require("express");
       port       = process.env.PORT || 3000;
       bodyParser = require("body-parser");
       path       = require("path");
+      methodOverride = require("method-override");
       commentRoutes = require("./routes/comments");
       campgroundRoutes = require("./routes/campgrounds");
       authRoutes = require("./routes/auth");
@@ -36,6 +37,7 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
