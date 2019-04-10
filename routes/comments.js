@@ -2,7 +2,7 @@ const express = require("express");
       router  = express.Router({mergeParams: true});
 
 //new comment post
-router.post("/comments", isLoggedIn, isEmpty, (req, res, next) => {
+router.post("/", isLoggedIn, isEmpty, (req, res, next) => {
     Campground.findById(req.params.id, (err, foundCampground) => {
         if(err) {
             console.log(err);
@@ -29,6 +29,30 @@ router.post("/comments", isLoggedIn, isEmpty, (req, res, next) => {
         }
     })
 });
+
+router.get("/:comment_id/edit", (req, res, next) => {
+    Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
+        if(err) console.log(err);
+        Comment.findById(req.params.comment_id, (err, foundComment) => {
+            if(err) {
+                console.log(err);
+                res.redirect("back");
+            }
+            res.render("comments/edit", {campground: foundCampground, comment: foundComment})
+        })
+    })
+});
+
+router.put("/:comment_id", (req, res, next) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+        if(err) {
+            res.redirect("back");
+            console.log(err);
+        }
+        res.redirect(`/campgrounds/${req.params.id}`);
+    })
+})
+
 
 
 function isLoggedIn(req, res, next) {

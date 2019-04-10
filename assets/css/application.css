@@ -11,8 +11,8 @@ nav .navbar-toggler {
 }
 
 #edit-comment-form {
-  -webkit-box-shadow: 1px 1px 17px 1px rgba(0, 0, 0, 0.75);
-          box-shadow: 1px 1px 17px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 1px 11px -3px #e7a61a;
+          box-shadow: 0px 1px 11px -3px #e7a61a;
 }
 
 #user-question {

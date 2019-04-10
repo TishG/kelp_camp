@@ -40,16 +40,16 @@
                 </section>
         </section>
 
-          <!-- new comment form section -->
+          <!-- edit comment form section -->
     <section class="dropdown-divider my-4"></section>
 
-    <form id="new-comment-form" class="card p-3" action="/campgrounds/<%= campground._id %>/comments" method="POST">
-        <p><strong>Add a comment to "<%= campground.name %>"</strong></p>
+    <form id="edit-comment-form" class="card p-3" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+        <p><strong>Edit comment from "<%= campground.name %>"</strong></p>
     <div class="form-group">
         <section class="text-left">
             <label for="text">Text:</label> 
         </section>
-        <input id="text" type="text" aria-placeholder="Enter text" placeholder="Enter text" name="comment[text]" class="form-control">
+        <input id="text" type="text" aria-placeholder="Enter text" placeholder="Enter text" name="comment[text]" class="form-control" value="<%= comment.text %>">
     </div>
     <section class="d-flex justify-content-end">
         <button class="btn btn-primary">Post</button>
@@ -57,6 +57,7 @@
     </form>
 
     <section class="dropdown-divider"></section>
+    <!-- edit comment form section -->
 
     <!-- comments -->
     <h5>Comments</h5>

@@ -48,7 +48,7 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
 });
-app.use("/campgrounds/:id", commentRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use(authRoutes);
 app.use("/", landingRoute);
