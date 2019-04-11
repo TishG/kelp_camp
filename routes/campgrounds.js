@@ -109,7 +109,10 @@ function isLoggedIn(req, res, next) {
 
 function checkCampgroundOwnership(req, res, next) {
     Campground.findById(req.params.id, (err, foundCampground) => {
-    if(err) console.log(err);
+    if(err) {
+        console.log(err);
+        res.redirect("back");
+    }
     if(foundCampground.author.id.equals(req.user._id)) {
         next();
         } else {
