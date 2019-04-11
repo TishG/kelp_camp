@@ -4,7 +4,7 @@ const express = require("express");
 
 //register show
 router.get("/register", (req, res, next) => {
-    res.render("register");
+    res.render("auth/register");
 });
 
 //new register post
@@ -32,7 +32,7 @@ router.post("/register", (req, res, next) => {
 
 //login show route
 router.get("/login", (req, res, next) => {
-    res.render("login");
+    res.render("auth/login");
 })
 
 //login post route
