@@ -30,7 +30,7 @@ router.post("/", isLoggedIn, isEmpty, (req, res, next) => {
     })
 });
 
-router.get("/:comment_id/edit", (req, res, next) => {
+router.get("/:comment_id/edit", isLoggedIn, checkCommentOwnership, (req, res, next) => {
     Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
         if(err) console.log(err);
         Comment.findById(req.params.comment_id, (err, foundComment) => {
@@ -43,7 +43,7 @@ router.get("/:comment_id/edit", (req, res, next) => {
     })
 });
 
-router.put("/:comment_id", (req, res, next) => {
+router.put("/:comment_id", isLoggedIn, checkCommentOwnership, isEmpty, (req, res, next) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
         if(err) {
             res.redirect("back");
@@ -53,7 +53,7 @@ router.put("/:comment_id", (req, res, next) => {
     })
 })
 
-router.delete("/:comment_id", (req, res, next) => {
+router.delete("/:comment_id", isLoggedIn, checkCommentOwnership, (req, res, next) => {
     Comment.findByIdAndDelete(req.params.comment_id, (err, deletedComment) => {
         if(err) {
             console.log(err);
@@ -75,6 +75,21 @@ function isEmpty(req, res, next) {
         return next();
     }
     res.redirect(`/campgrounds/${req.params.id}`);
+}
+
+function checkCommentOwnership(req, res, next) {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if(err) {
+        res.redirect("back");
+        console.log(err);
+    }
+    if(foundComment.author.id.equals(req.user._id)) {
+        next();
+        } else {
+            console.log(err);
+            res.redirect("back");
+        }
+    })
 }
 
 module.exports = router;
