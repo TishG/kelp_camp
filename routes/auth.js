@@ -14,11 +14,13 @@ router.post("/register", (req, res, next) => {
     User.register(newUser, password, (err, newUser) => {
         if(err) {
             console.log(err);
-            return res.render("register");
+            req.flash("error", err.message);
+            res.redirect("/register");
         }
         passport.authenticate("local")(req, res, (err) => {
             if(err) {
                 console.log(err);
+                req.flash("success", `Welcome to KelpCamp ${newUser.username}`)
                 return res.render("register");
             }
             res.redirect("/campgrounds");
@@ -42,12 +44,5 @@ router.get("/logout", (req, res, next) => {
     req.logout();
     res.redirect("/");
 });
-//function to check is user is logged in
-function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router

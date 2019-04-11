@@ -1,5 +1,6 @@
 const express    = require("express");
       app        = express();
+      flash      = require("connect-flash");
       port       = process.env.PORT || 3000;
       bodyParser = require("body-parser");
       path       = require("path");
@@ -35,6 +36,7 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
@@ -46,6 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 //calls function on all routes
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 app.use("/campgrounds/:id/comments", commentRoutes);
