@@ -68,8 +68,11 @@
                 <p class="text-left col-8"><%= comment.text %></p>
                 <p class="col-4"><em>Posted 10 days ago</em></p>
             </section>
-            <section class="text-left">
-                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm text-mute">Edit comment</a>
+            <section class="d-flex">
+                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm text-mute mr-1">Edit comment</a>
+                <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
             </section>
     <% }) %>
     </ul>
