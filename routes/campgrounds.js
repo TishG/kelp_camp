@@ -21,11 +21,12 @@ router.post("/", middleware.isLoggedIn, (req, res, next) => {
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
+    let price = req.body.price;
     let author = {
         id: req.user._id,
         username: req.user.username
     };
-    let newCampground = {name, image, description, author}; //<--- (sames as) let newCampground = {name:name, image:image, description:description, author:author};
+    let newCampground = {name, image, description, price, author}; //<--- (sames as) let newCampground = {name:name, image:image, description:description, author:author};
     //create a newCampground and save to db
     Campground.create(newCampground, (err, newCampgroundCreated) => {
         if(err) {
