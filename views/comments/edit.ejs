@@ -1,45 +1,6 @@
 <% include ../partials/header %>
 
 <main id="show-page" class="container text-center p-3">
-    <section class="row">
-        <!-- sidebar -->
-        <section class="col-lg-3">
-            <h4>KelpCamp</h4>
-            <section  class="d-flex justify-content-center">
-            <section class="card" style="width: 18rem;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item active">Info-1
-                    <li class="list-group-item">Info-2
-                    <li class="list-group-item">Info-3
-                </ul>
-            </section>
-        </section>
-        </section>
-        <!-- maincampground info and comments -->
-        <section class="col-lg-8 offset-lg-1 mt-3 mt-lg-0">
-
-        <section class="card ">
-            <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="<%= campground.name %>">
-            <section class="card-body text-left">
-                <section class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href=""><%= campground.name %></a></h4>
-                    <h4>$9.00/night</h4>
-                </section>
-                    <p class="card-text"><%= campground.description %></p>
-                    <p>
-                        <em class="small">Submitted by <%= campground.author.username %></em>
-                    </p>
-                  <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
-                    <section class="d-flex">
-                        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning mr-1">Edit</a>
-                        <a href="/campgrounds/<%= campground._id %>/delete" class="btn btn-danger">Delete</a>
-                    </section>
-                   <% } %>
-                </section>
-        </section>
-
-          <!-- edit comment form section -->
-    <section class="dropdown-divider my-4"></section>
 
     <form id="edit-comment-form" class="card p-3" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
         <p><strong>Edit comment from "<%= campground.name %>"</strong></p>
@@ -50,32 +11,10 @@
         <input id="text" type="text" aria-placeholder="Enter text" placeholder="Enter text" name="comment[text]" class="form-control" value="<%= comment.text %>">
     </div>
     <section class="d-flex justify-content-end">
-        <button class="btn btn-primary">Update</button>
+        <button class="btn btn-success mr-1">Update</button>
+        <a href="/campgrounds/<%= campground._id %>" class="btn btn-warning">Cancel</a>
     </section>
     </form>
-
-    <section class="dropdown-divider"></section>
-    <!-- edit comment form section -->
-
-    <!-- comments -->
-    <h5>Comments</h5>
-    <ul class="list-group">
-    <% campground.comments.map(comment => { %>
-        <li id="comments"class="list-group-item">
-            <p class="text-left col-8"><strong><%= comment.author.username %> said:</strong></p>
-            <section class="d-flex justify-content-between">
-                <p class="text-left col-8"><%= comment.text %></p>
-                <p class="col-4"><em>Posted 10 days ago</em></p>
-            </section>
-            <section class="text-left">
-                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm text-mute">Edit comment</a>
-            </section>
-    <% }) %>
-    </ul>
-
-    </section>
-
-    </section>
 
 </main>
 
