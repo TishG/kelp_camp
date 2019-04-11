@@ -23,7 +23,7 @@
             <section class="card-body text-left">
                 <section class="d-flex justify-content-between">
                     <h4 class="card-title"><a href=""><%= campground.name %></a></h4>
-                    <h4>$9.00/night</h4>
+                    <h4>$<%= campground.price %>/night</h4>
                 </section>
                     <p class="card-text"><%= campground.description %></p>
                     <p>
@@ -72,6 +72,7 @@
                 <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-sm btn-danger">Delete</button>
                 </form>
+                <small class="align-self-end ml-1 text-secondary">*Deletion is final.</small>
             </section>
         <% } %>
     <% }) %>
