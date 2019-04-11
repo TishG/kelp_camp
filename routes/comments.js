@@ -53,7 +53,15 @@ router.put("/:comment_id", (req, res, next) => {
     })
 })
 
-
+router.delete("/:comment_id", (req, res, next) => {
+    Comment.findByIdAndDelete(req.params.comment_id, (err, deletedComment) => {
+        if(err) {
+            console.log(err);
+            res.redirect("back");
+        }
+        res.redirect(`/campgrounds/${req.params.id}`);
+    })
+});
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
