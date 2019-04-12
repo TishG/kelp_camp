@@ -27,9 +27,9 @@
                 </section>
                     <p class="card-text"><%= campground.description %></p>
                     <p>
-                        <em class="small">Submitted by <%= campground.author.username %></em>
+                        <em class="small">Submitted by <%= campground.author.username %>,  <%= moment(campground.createdAt).fromNow() %></em>
                     </p>
-                  <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+                  <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                     <section class="d-flex">
                         <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning mr-1">Edit</a>
                         <a href="/campgrounds/<%= campground._id %>/delete" class="btn btn-danger">Delete</a>
@@ -59,24 +59,40 @@
     <!-- comments -->
     <h5>Comments</h5>
     <ul class="list-group">
-    <% campground.comments.map(comment => { %>
-        <li id="comments"class="list-group-item">
-            <p class="text-left col-8"><strong><%= comment.author.username %> said:</strong></p>
-            <section class="d-flex justify-content-between">
-                <p class="text-left col-8"><%= comment.text %></p>
-                <p class="col-4"><em>Posted 10 days ago</em></p>
-            </section>
-        <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-            <section class="d-flex">
-                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm text-mute mr-1">Edit comment</a>
-                <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                </form>
-                <small class="align-self-end ml-1 text-secondary">*Deletion is final.</small>
-            </section>
-        <% } %>
-    <% }) %>
-    </ul>
+            <% campground.comments.map(comment => { %>
+                <li id="comments"class="list-group-item">
+                    <% if(!currentUser) { %>
+                        <section class="d-flex justify-content-between">
+                            <p class="text-left"><strong><%= comment.author.username %> said:</strong></p>
+                            <p><em><%= moment(comment.createdAt).fromNow() %></em></p>
+                        </section>
+                        <p class="text-left list-inlint-item"><%= comment.text %></p>
+                    <% } %>
+                    <% if(currentUser && !comment.author.id.equals(currentUser._id) && !currentUser.isAdmin) { %>
+                        <section class="d-flex justify-content-between">
+                            <p class="text-left"><strong><%= comment.author.username %> said:</strong></p>
+                            <p><em><%= moment(comment.createdAt).fromNow() %></em></p>
+                        </section>
+                        <p class="text-left list-inlint-item"><%= comment.text %></p>
+                    <% } %>
+                <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                    <section class="d-flex justify-content-between">
+                            <p class="text-left"><strong><%= comment.author.username %> said:</strong></p>
+                            <p><em><%= moment(comment.createdAt).fromNow() %></em></p>
+                        </section>
+                        <section class="d-flex justify-content-between"> 
+                            <p class="text-left"><%= comment.text %></p>
+                            <section>
+                                <p class="d-inline"><a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm text-mute">Edit</a></p>
+                                <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="d-inline">
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </section>
+                        </section>  
+                <% } %>
+                </li>
+            <% }) %>
+            </ul>
 
     </section>
 

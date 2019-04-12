@@ -23,7 +23,7 @@ module.exports = {
             console.log(err);
             res.redirect("back");
         }
-        if(foundCampground.author.id.equals(req.user._id)) {
+        if(foundCampground.author.id.equals(req.user._id) || req.user.isAdmin) {
             next();
             } else {
                 req.flash("error", "You are not authorized to do that.")
@@ -39,7 +39,7 @@ module.exports = {
             res.redirect("back");
             console.log(err);
         }
-        if(foundComment.author.id.equals(req.user._id)) {
+        if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
             next();
             } else {
                 console.log(err);
