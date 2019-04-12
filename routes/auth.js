@@ -11,6 +11,9 @@ router.get("/register", (req, res, next) => {
 router.post("/register", (req, res, next) => {
     let newUser = new User({ username: req.body.username});
     let password = req.body.password;
+    if(req.body.adminCode === process.env.adminCode) {
+        newUser.isAdmin = true;
+    }
     User.register(newUser, password, (err, newUser) => {
         if(err) {
             console.log(err);
@@ -44,9 +47,9 @@ router.post("/login", passport.authenticate("local", {
 
 //logout route
 router.get("/logout", (req, res, next) => {
-    req.flash("success", "You have successfully signed out.")
     req.logout();
-    res.redirect("/");
+    req.flash("success", "You have successfully signed out.")
+    res.redirect("/campgrounds");
 });
 
 module.exports = router

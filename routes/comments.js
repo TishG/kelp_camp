@@ -73,7 +73,7 @@ router.delete("/:comment_id", middleware.isLoggedIn, middleware.checkCommentOwne
             req.flash("error", "Comment not found");
             res.redirect("back");
         }
-        req.flash("sucess", "Comment deleted.")
+        req.flash("sucess", "Comment deleted.");
         res.redirect(`/campgrounds/${req.params.id}`);
     })
 });
