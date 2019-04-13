@@ -13,10 +13,9 @@
 </head> 
     <body>
         <% include ./navbar %>
-
-        <section class="container mt-2">
+           <section class="container">
            <% if(error && error.length > 0) { %>
-            <section class="alert alert-danger" role="alert">
+            <section class="alert alert-danger mt-2" role="alert">
                <%- error %>
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">
@@ -27,7 +26,7 @@
                 </button>
             </section>
            <% } else if(success && success.length > 0) { %>
-            <section class="alert alert-success" role="alert">
+            <section class="alert alert-success mt-2" role="alert">
                 <%- success %>
                 <!-- close button -->
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -40,4 +39,4 @@
                 <!-- close button -->
             </section>
             <% } %>
-        </section>
+            </section>

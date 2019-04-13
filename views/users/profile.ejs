@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+<h1 id="profile-page-title" class="text-center pb-2">Profile page</h1>
+<main class="container">
+<section class="row pt-2">
+    <section class="col-md-3">
+        <h3 class="text-center"><%= user.username %></h3>
+        <% if(currentUser && currentUser.username == user.username && currentUser.isAdmin) { %> 
+            <p id="admin-user-text">*Admin User</p>
+        <% } %>
+        <img src="<%= user.avatar %>" class="img-fluid rounded" alt="Profile image">
+    </section>
+    <section class="col-md-9 pt-3 pt-md-0 mt-lg-">
+        <h3 class="text-center">Campgrounds</h3>
+        <ul class="list-group list-group-flush">
+           <% campgrounds.map(campground => { %>
+                <li class="list-group-item"><a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a></li>
+           <% }) %>
+        </ul>
+    </section>
+</section>
+</main>
+
+<% include ../partials/footer %>

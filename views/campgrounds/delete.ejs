@@ -38,7 +38,7 @@
                 </section>
                     <p class="card-text"><%= campground.description %></p>
                     <p>
-                        <em class="small">Submitted by <%= campground.author.username %>,  <%= moment(campground.createdAt).fromNow() %></em>
+                        <em class="small">Submitted by <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a>,  <%= moment(campground.createdAt).fromNow() %></em>
                     </p>
                     <section class="d-flex">
                         <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning mr-1">Edit</a>

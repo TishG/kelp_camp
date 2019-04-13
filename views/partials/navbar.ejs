@@ -14,10 +14,11 @@
                 <a class="nav-item nav-link" href="/login">Login</a>
                 <a class="nav-item nav-link btn btn-primary text-white" href="/register">Sign Up</a>
                 <% } else { %>
-                <a class="nav-item nav-link" href="#">( Signed in as <strong><%= currentUser.username %></strong> ) -</a>
-                <% if(currentUser && currentUser.isAdmin) { %>
+                <a class="nav-item nav-link" href="/users/<%= currentUser._id %>">Profile</a>
+                <a class="nav-item nav-link" href="#">( Signed in as <strong><%= currentUser.username %></strong> )</a>
+                <!-- <% if(currentUser && currentUser.isAdmin) { %>
                     <a class="nav-item nav-link text-primary" href="#">Admin user</a>
-                <% } %>
+                <% } %> -->
                 <a class="nav-item nav-link" href="/logout">Logout</a>
                 <% } %>
             </section>
