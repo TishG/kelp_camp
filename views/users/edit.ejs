@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+<main class="container">
+<h1 class="text-center">Edit Avatar</h1>
+<section class="text-center">
+    <img src="<%= user.avatar %>" alt="avatar image" class="img-fluid col-12 col-sm-8 col-md-6 col-lg-4">
+</section>
+<section class="d-flex justify-content-center mt-3">
+<form action="/users/<%= user._id %>?_method=PUT" method="POST" class="form-inline">
+    <section class="form-group">
+        <label for="avatar" class="mr-1">Profile Image:</label>
+        <input id="avatar" type="text" aria-placeholder="Enter an image url" placeholder="Enter an image url" name="avatar" class="form-control" value="<%= user.avatar %>">
+    </section>    
+    <button class="btn btn-success ml-1">Submit</button>
+</form>
+
+</section>
+
+</main>
+
+<% include ../partials/footer %>
