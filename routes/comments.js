@@ -1,6 +1,6 @@
 const express = require("express");
       router  = express.Router({mergeParams: true});
-      middleware = require("../middleware")
+      middleware = require("../middleware");
 
 //new comment post
 router.post("/", middleware.isLoggedIn, middleware.isEmpty, (req, res, next) => {

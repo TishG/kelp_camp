@@ -9,6 +9,7 @@ const express    = require("express");
       campgroundRoutes = require("./routes/campgrounds");
       authRoutes = require("./routes/auth");
       landingRoute = require("./routes/landing");
+      profileRoute = require("./routes/profilePages");
       dotenv     = require('dotenv').config(),
       URI        = `mongodb+srv://kelpCampCreator:${process.env.kelpCampCreatorPassword}@kelpcampapp-rwgto.mongodb.net/test?retryWrites=true`,
       mongoose   = require("mongoose");
@@ -53,10 +54,20 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     next();
 });
+
+router.use(function(req, res, next) {
+
+    // log each request to the console
+    console.log(req.method, req.url);
+
+    // continue doing what we were doing and go to the route
+    next(); 
+});
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use(authRoutes);
 app.use("/", landingRoute);
+app.use("/users", profileRoute);
 
 //Auth Routes
 

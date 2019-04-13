@@ -47,5 +47,8 @@ module.exports = {
                 res.redirect("back");
             }
         })
+    }, 
+    escapeRegex: (text) => {
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     }
 }

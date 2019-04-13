@@ -19,4 +19,12 @@ nav .navbar-toggler {
   -webkit-box-shadow: 0px 1px 11px -3px #e7a61a;
           box-shadow: 0px 1px 11px -3px #e7a61a;
 }
+
+#admin-user-text {
+  color: #4B0082;
+}
+
+#profile-page-title {
+  background-color: #ADD8E6;
+}
 /*# sourceMappingURL=application.css.map */

@@ -7,9 +7,25 @@
             <p>
                 <a class="btn btn-primary btn-md" href="/campgrounds/new/">Add a new campground</a>
             </p>
+
+            <section class="d-flex justify-content-center">
+            <form action="/campgrounds" method="GET" class="form-inline">
+                <section class="form-group">
+                    <label class="mr-1" for="search">Find:</label>
+                    <input id="search" type="text" aria-placeholder="Search a campground..." placeholder="Search a campground..." name="search" class="form-control">
+                </section>
+                <button class="btn btn-default"><span class="fas fa-search"></span></button>
+            </form>
+            </section>
+
         </section>
     </header>
     <section class="row">
+        <% if(noMatch) { %>
+            <section class="col-md-12">
+                <h5 class="text-center"><%= noMatch %></h5>
+            </section>
+        <% } %>
             <% campgrounds.map(campground => { %>
                 <section class="col-sm-6 col-lg-4 pb-4">
                     <section class="card p-1 text-center">

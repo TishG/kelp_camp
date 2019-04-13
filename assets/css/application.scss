@@ -1,3 +1,6 @@
+$admin-user-color: #4B0082;
+$profile-page-tile-bg-color: #ADD8E6;
+
 nav {
     .navbar-toggler {
         border: none;
@@ -20,4 +23,12 @@ nav {
 
 #edit-campground {
     box-shadow: 0px 1px 11px -3px rgba(231,166,26,1);
+}
+
+#admin-user-text {
+    color: $admin-user-color;
+}
+
+#profile-page-title {
+    background-color: $profile-page-tile-bg-color;
 }

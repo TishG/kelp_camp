@@ -9,7 +9,7 @@ router.get("/register", (req, res, next) => {
 
 //new register post
 router.post("/register", (req, res, next) => {
-    let newUser = new User({ username: req.body.username});
+    let newUser = new User({ username: req.body.username, avatar: req.body.avatar});
     let password = req.body.password;
     if(req.body.adminCode === process.env.adminCode) {
         newUser.isAdmin = true;
@@ -28,7 +28,7 @@ router.post("/register", (req, res, next) => {
             }
             req.flash("success", `Welcome to KelpCamp ${newUser.username}`)
             res.redirect("/campgrounds");
-            console.log("Successfully created user");
+            console.log(`${newUser.avatar}, ${newUser.username}`);
         })
     })
 });
@@ -40,9 +40,10 @@ router.get("/login", (req, res, next) => {
 
 //login post route
 router.post("/login", passport.authenticate("local", {
-    failureRedirect: "/login"}), (req, res, next) => {
-        req.flash("success", "You have successfully logged in");
-        res.redirect("/campgrounds");
+    failureRedirect: "/login",
+    failuerFlash: true,
+    successRedirect: "/campgrounds",
+    successFlash: "Welcome back!"}), (req, res, next) => {
     });
 
 //logout route
