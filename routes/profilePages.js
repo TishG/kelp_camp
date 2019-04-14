@@ -18,6 +18,7 @@ const express = require("express");
                     res.redirect("back");
                 }
                 res.render("users/profile", {user: foundUser, campgrounds: allCampgrounds});
+                console.log("Profile avatart url: ", foundUser.avatar)
             })
         })
       });
@@ -48,16 +49,22 @@ const express = require("express");
     //edit image avatar post
     
     router.put("/:id", middleware.isLoggedIn, (req, res, next) => {
-        User.findByIdAndUpdate(req.params.id, req.body.avatar, (err, foundUser) => {
+        User.findByIdAndUpdate(req.params.id, { $set: {avatar: req.body.avatar }}, (err, foundUser) => {
             console.log("Url before: ", foundUser.avatar);
             if(err) {
                 req.flash("error", err.message);
                 res.redirect("back");
                 console.log(err);
             }
+            if(foundUser._id.equals(req.user._id)) {
             req.flash("success", "Updated avatar.");
             res.redirect(`/users/${req.params.id}`);
             console.log("Url after: ", foundUser.avatar);
+            }
+            else {
+            req.flash("error", "You are not authorized to do that");
+            res.redirect("/campgrounds");
+            }
         })
     })
 
