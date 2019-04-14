@@ -10,7 +10,7 @@ const express    = require("express");
       authRoutes = require("./routes/auth");
       landingRoute = require("./routes/landing");
       profileRoute = require("./routes/profilePages");
-      dotenv     = require('dotenv').config(),
+      dotenv     = require('dotenv').config();
       URI        = `mongodb+srv://kelpCampCreator:${process.env.kelpCampCreatorPassword}@kelpcampapp-rwgto.mongodb.net/test?retryWrites=true`,
       mongoose   = require("mongoose");
       Campground = require("./models/campground");
