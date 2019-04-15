@@ -10,9 +10,13 @@
         <% } %>
         <img src="<%= user.avatar %>" class="img-fluid rounded" alt="Profile image">
         <% if(currentUser && user._id.equals(currentUser._id)) { %>
-        <p>
-            <a href="/users/<%= user._id %>/edit" class="btn btn-sm btn-warning mt-1">Edit Avatar</a>
-        </p>
+        <section id="profile-settings-container" class="mt-4">
+        <h4>Profile settings</h4>
+        <h5>Edit</h5>    
+        <section class="list-group">      
+            <a href="/users/<%= user._id %>/edit" class="text-primary list-group-item list-group-item-action">Edit username and/or avatar</a>
+        </section>  
+        </section>
         <% } %>
     </section>
     <section class="col-md-9 pt-3 pt-md-0 mt-lg-">
