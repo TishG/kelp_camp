@@ -23,7 +23,7 @@ const express = require("express");
         })
       });
 
-    //   edit avatar image url page
+    //   edit profile url page
       router.get("/:id/edit", middleware.isLoggedIn, (req, res, next) => {
         User.findById(req.params.id, (err, foundUser) => {
             if(err) {
@@ -46,11 +46,10 @@ const express = require("express");
         })
       });
 
-    //edit image avatar post
+    //edit profile post
     
     router.put("/:id", middleware.isLoggedIn, (req, res, next) => {
-        User.findByIdAndUpdate(req.params.id, { $set: {avatar: req.body.avatar }}, (err, foundUser) => {
-            console.log("Url before: ", foundUser.avatar);
+        User.findByIdAndUpdate(req.params.id, req.body.user, (err, foundUser) => {
             if(err) {
                 req.flash("error", err.message);
                 res.redirect("back");
@@ -59,13 +58,12 @@ const express = require("express");
             if(foundUser._id.equals(req.user._id)) {
             req.flash("success", "Updated avatar.");
             res.redirect(`/users/${req.params.id}`);
-            console.log("Url after: ", foundUser.avatar);
             }
             else {
             req.flash("error", "You are not authorized to do that");
             res.redirect("/campgrounds");
             }
-        })
+        })   
     })
 
 module.exports = router;

@@ -69,7 +69,7 @@ router.get("/:id", (req, res, next) => {
         if(err) {
             console.log(err);
             req.flash("error", "Camground not found.")
-        }
+        }      
         res.render("campgrounds/show", {campground: foundCampground});
     })
 });
@@ -83,7 +83,6 @@ router.get("/:id/edit", middleware.isLoggedIn, middleware.checkCampgroundOwnersh
             res.redirect(`back`);
         }
         res.render("campgrounds/edit", {campground: foundCampground});
-        console.log("Found - ", foundCampground);
     })
 })
 
@@ -98,7 +97,6 @@ router.put("/:id", middleware.checkCampgroundOwnership, (req, res, next) => {
         }
         req.flash("success", "Updated campground.");
         res.redirect(`/campgrounds/${req.params.id}`);
-        console.log("Updated - ", updatedCampground.name);
     })
 })
 

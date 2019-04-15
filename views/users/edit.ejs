@@ -1,20 +1,28 @@
 <% include ../partials/header %>
-<main class="container">
-<h1 class="text-center">Edit Avatar</h1>
-<section class="text-center">
-    <img src="<%= user.avatar %>" alt="avatar image" class="img-fluid col-12 col-sm-8 col-md-6 col-lg-4">
-</section>
-<section class="d-flex justify-content-center mt-3">
-<form action="/users/<%= user._id %>?_method=PUT" method="POST" class="form-inline">
-    <section class="form-group">
-        <label for="avatar" class="mr-1">Profile Image:</label>
-        <input id="avatar" type="text" aria-placeholder="Enter an image url" placeholder="Enter an image url" name="avatar" class="form-control" value="<%= user.avatar %>">
-    </section>    
-    <button class="btn btn-success ml-1">Submit</button>
-</form>
 
-</section>
+<main class="container col-10 col-md-7 col-lg-5 p-3">
+    <h1 class="text-center pb-4">Edit Profile</h1>
 
+    <section class="text-center col-12 col-sm-8 col-md-6 col-lg-4">
+            <h3><%= user.username %></h3>
+            <img src="<%= user.avatar %>" alt="avatar image" class="img-fluid">
+    </section>
+
+    <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+        <section class="form-group">
+            <label for="username">Username:</label>
+            <input id="username" type="text" aria-placeholder="Enter a username" placeholder="Enter a username" name="user[username]" class="form-control" value="<%= user.username %>">
+        </section>
+
+        <section class="form-group">
+            <label for="avatar">Profile Image:</label>
+            <input id="avatar" type="text" aria-placeholder="Enter an image url" placeholder="Enter an image url" name="user[avatar]" class="form-control" value="<%= user.avatar %>">
+        </section>
+        
+        <section class="d-flex flex-column">
+            <button class="btn btn-success">Submit</button>
+        </section>
+    </form>
 </main>
 
 <% include ../partials/footer %>
